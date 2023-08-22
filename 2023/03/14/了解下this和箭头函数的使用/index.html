@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>了解下this和箭头函数的使用 | 亦小染のBlog</title><meta name="keywords" content="javascript"><meta name="author" content="亦小染"><meta name="copyright" content="亦小染"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="了解下this和箭头函数的使用✨调用位置 作用域跟在哪里定义有关，与在哪里执行无关 this指向跟在哪里定义无关，跟如何调用，通过什么样的形式调用有关 this(这个) 这个函数如何被调用(方便记忆) 为了方便理解，默认情况下不开启严格模式  ✨this的四种绑定规则✨默认绑定函数最常用的调用方式，调用函数的类型：独立函数调用 123function bar() &amp;#123;  console.l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解下this和箭头函数的使用">
+<meta property="og:url" content="https://alicecici.github.io/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="亦小染のBlog">
+<meta property="og:description" content="了解下this和箭头函数的使用✨调用位置 作用域跟在哪里定义有关，与在哪里执行无关 this指向跟在哪里定义无关，跟如何调用，通过什么样的形式调用有关 this(这个) 这个函数如何被调用(方便记忆) 为了方便理解，默认情况下不开启严格模式  ✨this的四种绑定规则✨默认绑定函数最常用的调用方式，调用函数的类型：独立函数调用 123function bar() &amp;#123;  console.l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alicecici.github.io/img/article.png">
+<meta property="article:published_time" content="2023-03-14T05:44:14.000Z">
+<meta property="article:modified_time" content="2023-03-14T05:53:01.351Z">
+<meta property="article:author" content="亦小染">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alicecici.github.io/img/article.png"><link rel="shortcut icon" href="/img/avatar.jpg"><link rel="canonical" href="https://alicecici.github.io/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '了解下this和箭头函数的使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-14 13:53:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/./img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/./img/article.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">亦小染のBlog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">了解下this和箭头函数的使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-14T05:44:14.000Z" title="发表于 2023-03-14 13:44:14">2023-03-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-14T05:53:01.351Z" title="更新于 2023-03-14 13:53:01">2023-03-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="了解下this和箭头函数的使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="了解下this和箭头函数的使用"><a href="#了解下this和箭头函数的使用" class="headerlink" title="了解下this和箭头函数的使用"></a>了解下this和箭头函数的使用</h1><h2 id="✨调用位置"><a href="#✨调用位置" class="headerlink" title="✨调用位置"></a>✨调用位置</h2><ul>
+<li>作用域跟在哪里定义有关，与在哪里执行无关</li>
+<li><code>this</code>指向跟在哪里定义无关，跟如何调用，通过什么样的形式调用有关</li>
+<li><code>this</code>(这个) 这个函数如何被调用(方便记忆)</li>
+<li>为了方便理解，默认情况下不开启严格模式</li>
+</ul>
+<h2 id="✨this的四种绑定规则"><a href="#✨this的四种绑定规则" class="headerlink" title="✨this的四种绑定规则"></a>✨this的四种绑定规则</h2><h3 id="✨默认绑定"><a href="#✨默认绑定" class="headerlink" title="✨默认绑定"></a>✨默认绑定</h3><p>函数最常用的调用方式，调用函数的类型：独立函数调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bar</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>) <span class="comment">// window</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="✨隐式绑定"><a href="#✨隐式绑定" class="headerlink" title="✨隐式绑定"></a>✨隐式绑定</h3><p>用最通俗的话表示就是：对象拥有某个方法，通过这个对象访问方法且直接调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;xiao&quot;</span>,</span><br><span class="line">  <span class="attr">foo</span>: foo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">foo</span>() <span class="comment">// obj对象</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="✨显示绑定-apply-x2F-call-x2F-bind-也称硬绑定"><a href="#✨显示绑定-apply-x2F-call-x2F-bind-也称硬绑定" class="headerlink" title="✨显示绑定 apply&#x2F;call&#x2F;bind(也称硬绑定)"></a>✨显示绑定 apply&#x2F;call&#x2F;bind(也称硬绑定)</h3><p>但是在某些场景下，<code>this</code>的改变都是意想不到的，实际上我们无法控制回调函数的执行方式，因此没有办法控制调用位置已得到期望的绑定即this指向。</p>
+<p>接下来的显示绑定就可以用来解决这一隐式丢失问题。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;函数被调用了&quot;</span>, <span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;obj&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo.<span class="title function_">call</span>(obj)  <span class="comment">//obj</span></span><br><span class="line">foo.<span class="title function_">apply</span>(obj)  <span class="comment">//obj</span></span><br><span class="line">foo.<span class="title function_">apply</span>(<span class="string">&quot;aaaa&quot;</span>)  <span class="comment">//&quot;aaaa&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>call</code>和<code>apply</code>的区别：</p>
+<p>如果函数需要传入参数，<code>call</code>是直接传入参数，而<code>apply</code>是以数组形式传入参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">num1, num2, num3</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(num1 + num2 + num3, <span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum.<span class="title function_">call</span>(<span class="string">&quot;call&quot;</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>)</span><br><span class="line">sum.<span class="title function_">apply</span>(<span class="string">&quot;apply&quot;</span>, [<span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="✨new绑定"><a href="#✨new绑定" class="headerlink" title="✨new绑定"></a>✨new绑定</h3><p><code>JavaScript</code>中的函数可以当做一个类的构造函数来使用，也就是使用<code>new</code>关键字</p>
+<p>我们通过一个<code>new</code>关键字调用一个函数时(构造器), 这个时候<code>this</code>是在调用这个构造器时创建出来的对象</p>
+<p>使用new关键字来调用函数时，会执行如下的操作：</p>
+<p>1.创建一个全新的对象；</p>
+<p>2.这个新对象会被执行<code>prototype</code>连接；</p>
+<p>3.这个新对象会绑定到函数调用的<code>this</code>上（<code>this</code>的绑定在这个步骤完成）；</p>
+<p>4.如果函数没有返回其他对象，表达式会返回这个新对象；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name, age</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;xiao&quot;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">name</span>, p1.<span class="property">age</span>) <span class="comment">//xiao 18</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&quot;ran&quot;</span>, <span class="number">30</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p2.<span class="property">name</span>, p2.<span class="property">age</span>) <span class="comment">//ran 30</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="✨this的优先级-从高到低"><a href="#✨this的优先级-从高到低" class="headerlink" title="✨this的优先级 从高到低"></a>✨this的优先级 从高到低</h2><p><code>总结：new绑定 &gt; 显示绑定（call/apply/bind）&gt;隐式绑定（obj.foo()）&gt; 默认绑定（foo()）</code></p>
+<ul>
+<li>默认绑定优先级最低</li>
+<li>call&#x2F;apply的显示绑定高于隐式绑定</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">obj.<span class="property">foo</span>.<span class="title function_">call</span>(<span class="string">&quot;abc&quot;</span>)     <span class="comment">//abc </span></span><br><span class="line">obj.<span class="property">foo</span>.<span class="title function_">apply</span>(<span class="string">&quot;abc&quot;</span>)     <span class="comment">//abc     </span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bind的显示绑定高于隐式绑定</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">foo</span>:foo.<span class="title function_">bind</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">foo</span>()  <span class="comment">//&#x27;aaa&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>new关键字高于显示绑定(new不能和call&#x2F;apply共用)<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bar = foo.<span class="title function_">bind</span>(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="title function_">bar</span>()  <span class="comment">//foo()</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="✨箭头函数-arrow-function"><a href="#✨箭头函数-arrow-function" class="headerlink" title="✨箭头函数 (arrow function)"></a>✨箭头函数 (arrow function)</h2><h3 id="✨基本语法"><a href="#✨基本语法" class="headerlink" title="✨基本语法"></a>✨基本语法</h3><p>首先箭头函数是<code>ES6</code>新增的语法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">foo</span> = (<span class="params"></span>) =&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="✨箭头函数this"><a href="#✨箭头函数this" class="headerlink" title="✨箭头函数this"></a>✨箭头函数this</h3><p>箭头函数中的<code>this</code>，永远指向外层作用域中最接近自己的普通函数的<code>this</code></p>
+<p>箭头函数的this指向该函数<strong>定义</strong>时所在的作用域</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&quot;xiao&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="title function_">foo</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">foo</span>()             <span class="comment">//window</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">foo</span>: foo&#125;</span><br><span class="line">obj.<span class="title function_">foo</span>()         <span class="comment">//window</span></span><br><span class="line">foo.<span class="title function_">call</span>(<span class="string">&quot;abc&quot;</span>)   <span class="comment">//window</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="✨箭头函数的应用场景"><a href="#✨箭头函数的应用场景" class="headerlink" title="✨箭头函数的应用场景"></a>✨箭头函数的应用场景</h3><p>箭头函数（因为箭头函数的<code>this</code>指向定义时的对象，即<code>obj</code>）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  <span class="attr">data</span>: [],</span><br><span class="line">  <span class="attr">getData</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>)</span><br><span class="line">    &#125;, <span class="number">2000</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.<span class="title function_">getData</span>()</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Alicecici.github.io">亦小染</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://alicecici.github.io/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/">https://alicecici.github.io/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Alicecici.github.io" target="_blank">亦小染のBlog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/javascript/">javascript</a></div><div class="post_share"><div class="social-share" data-image="/./img/article.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/03/14/vue-js3%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/"><img class="prev-cover" src="/./img/picture03.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">vue.js3的设计思路</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/14/%E7%AE%80%E5%8D%95DP/"><img class="next-cover" src="/./img/picture_glorious02.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">简单DP</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/./img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">亦小染</div><div class="author-info__description">念念不忘，必有回响</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Alicecici" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:2149382799@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">了解下this和箭头函数的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8%E8%B0%83%E7%94%A8%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">✨调用位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8this%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%BB%91%E5%AE%9A%E8%A7%84%E5%88%99"><span class="toc-number">1.2.</span> <span class="toc-text">✨this的四种绑定规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E9%BB%98%E8%AE%A4%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.1.</span> <span class="toc-text">✨默认绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.2.</span> <span class="toc-text">✨隐式绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E6%98%BE%E7%A4%BA%E7%BB%91%E5%AE%9A-apply-x2F-call-x2F-bind-%E4%B9%9F%E7%A7%B0%E7%A1%AC%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.3.</span> <span class="toc-text">✨显示绑定 apply&#x2F;call&#x2F;bind(也称硬绑定)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8new%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.4.</span> <span class="toc-text">✨new绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8this%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7-%E4%BB%8E%E9%AB%98%E5%88%B0%E4%BD%8E"><span class="toc-number">1.3.</span> <span class="toc-text">✨this的优先级 从高到低</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9C%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0-arrow-function"><span class="toc-number">1.4.</span> <span class="toc-text">✨箭头函数 (arrow function)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">✨基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0this"><span class="toc-number">1.4.2.</span> <span class="toc-text">✨箭头函数this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%A8%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.4.3.</span> <span class="toc-text">✨箭头函数的应用场景</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/08/21/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%92%8C%E5%88%86%E9%A1%B5%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="网络请求和分页功能的实现"><img src="/./img/article12.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="网络请求和分页功能的实现"/></a><div class="content"><a class="title" href="/2023/08/21/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E5%92%8C%E5%88%86%E9%A1%B5%E5%8A%9F%E8%83%BD%E7%9A%84%E5%AE%9E%E7%8E%B0/" title="网络请求和分页功能的实现">网络请求和分页功能的实现</a><time datetime="2023-08-21T14:30:48.000Z" title="发表于 2023-08-21 22:30:48">2023-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/06/v-for%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87-%E8%A7%A3%E5%86%B3%E6%B8%B2%E6%9F%93%E6%9C%AC%E5%9C%B0%E9%9D%99%E6%80%81%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/" title="v-for加载本地图片 解决渲染本地静态图片问题"><img src="/./img/article08.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="v-for加载本地图片 解决渲染本地静态图片问题"/></a><div class="content"><a class="title" href="/2023/04/06/v-for%E5%8A%A0%E8%BD%BD%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87-%E8%A7%A3%E5%86%B3%E6%B8%B2%E6%9F%93%E6%9C%AC%E5%9C%B0%E9%9D%99%E6%80%81%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/" title="v-for加载本地图片 解决渲染本地静态图片问题">v-for加载本地图片 解决渲染本地静态图片问题</a><time datetime="2023-04-06T04:52:27.000Z" title="发表于 2023-04-06 12:52:27">2023-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/14/vue-js3%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="vue.js3的设计思路"><img src="/./img/picture03.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vue.js3的设计思路"/></a><div class="content"><a class="title" href="/2023/03/14/vue-js3%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="vue.js3的设计思路">vue.js3的设计思路</a><time datetime="2023-03-14T05:46:31.000Z" title="发表于 2023-03-14 13:46:31">2023-03-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" title="了解下this和箭头函数的使用"><img src="/./img/article.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="了解下this和箭头函数的使用"/></a><div class="content"><a class="title" href="/2023/03/14/%E4%BA%86%E8%A7%A3%E4%B8%8Bthis%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E7%9A%84%E4%BD%BF%E7%94%A8/" title="了解下this和箭头函数的使用">了解下this和箭头函数的使用</a><time datetime="2023-03-14T05:44:14.000Z" title="发表于 2023-03-14 13:44:14">2023-03-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/14/%E7%AE%80%E5%8D%95DP/" title="简单DP"><img src="/./img/picture_glorious02.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="简单DP"/></a><div class="content"><a class="title" href="/2023/03/14/%E7%AE%80%E5%8D%95DP/" title="简单DP">简单DP</a><time datetime="2023-03-14T05:41:56.000Z" title="发表于 2023-03-14 13:41:56">2023-03-14</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By 亦小染</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
